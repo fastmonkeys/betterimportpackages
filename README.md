@@ -3,7 +3,7 @@
 Sublime Text 3 plugin that helps with Python imports. It scans the open folders for imports that were used previously and uses them to write the correct import. Please note that the plugin is just a prototype at this stage.
 
 
-## How to use it
+## How to use
 1. Select the class or function you wish to import (e.g. *UserPhoto*) and either right-click "Add import" or use the keybinding Cmd+Shift+I.
 ![Screenshot](http://i.imgur.com/UKkmgCW.png)
 
