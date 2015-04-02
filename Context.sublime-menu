@@ -1,0 +1,7 @@
+[
+    {
+        "id" : "add-import",
+        "caption" : "Add Import",
+        "command" : "importify"
+    }
+]
