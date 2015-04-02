@@ -1,6 +1,6 @@
 ![Better Import Packages](http://i.imgur.com/a9qAFGw.png)
 
-Sublime Text 3 plugin that helps writing imports for Python. It scans the open folders for imports that were used previously and uses them to write the correct import. Please note that the plugin is just a prototype at this stage.
+Sublime Text 3 plugin that helps with Python imports. It scans the open folders for imports that were used previously and uses them to write the correct import. Please note that the plugin is just a prototype at this stage.
 
 
 ## How to use it
