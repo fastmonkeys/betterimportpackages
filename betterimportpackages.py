@@ -1,6 +1,7 @@
 import shutil
 import os.path
-import sublime, sublime_plugin
+import sublime
+import sublime_plugin
 
 from subprocess import Popen, PIPE
 
@@ -44,15 +45,38 @@ def analyze_data(data, word):
     return None
 
 
+# SafetyReview
 class InsertimportCommand(sublime_plugin.TextCommand):
+    def find_first_import(self):
+        first_import = self.view.find('^(from|import)', 0)
+        if first_import:
+            return first_import.a
+
+    def find_end_of_comments(self):
+        end_of_comments = self.view.find('^#(.*)$', 0)
+        if end_of_comments:
+            return end_of_comments.b+1
+
+    def find_insert_position(self):
+        for x in [
+            self.find_first_import,
+            self.find_end_of_comments,
+            lambda: 0
+        ]:
+            a = x()
+            if a:
+                return a
+
     def run(self, edit, analyzed):
+        import_position = self.find_insert_position()
+
         if analyzed[0] and analyzed[1]:
-            self.view.insert(edit, 0, "from %s import %s\n" % (
+            self.view.insert(edit, import_position, "from %s import %s\n" % (
                 analyzed[0],
                 analyzed[1]
             ))
         elif analyzed[0]:
-            self.view.insert(edit, 0, "import %s\n" % (
+            self.view.insert(edit, import_position, "import %s\n" % (
                 analyzed[0]
             ))
 
