@@ -44,6 +44,19 @@ def analyze_data(data, word):
     return None
 
 
+class InsertimportCommand(sublime_plugin.TextCommand):
+    def run(self, edit, analyzed):
+        if analyzed[0] and analyzed[1]:
+            self.view.insert(edit, 0, "from %s import %s\n" % (
+                analyzed[0],
+                analyzed[1]
+            ))
+        elif analyzed[0]:
+            self.view.insert(edit, 0, "import %s\n" % (
+                analyzed[0]
+            ))
+
+
 class ImportifyCommand(sublime_plugin.TextCommand):
     def search_project_for_import(self, word):
         # This is a huge hack.
@@ -66,20 +79,19 @@ class ImportifyCommand(sublime_plugin.TextCommand):
 
         return None
 
+    def add_import(self, data):
+        analyzed = self.search_project_for_import(data)
+        if analyzed:
+            self.view.window().run_command(
+                'insertimport',
+                {'analyzed': analyzed}
+            )
+        else:
+            sublime.error_message("Could not find import for %r" % data)
+
     def run(self, edit, **kwargs):
         for region in self.view.sel():
             region = self.view.word(region)
             if not region.empty():
                 data = self.view.substr(region)
-
-                analyzed = self.search_project_for_import(data)
-                if analyzed:
-                    if analyzed[0] and analyzed[1]:
-                        self.view.insert(edit, 0, "from %s import %s\n" % (
-                            analyzed[0],
-                            analyzed[1]
-                        ))
-                    elif analyzed[0]:
-                        self.view.insert(edit, 0, "import %s\n" % (
-                            analyzed[0]
-                        ))
+                sublime.set_timeout_async(lambda: self.add_import(data), 0)
