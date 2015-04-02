@@ -9,3 +9,18 @@ Sublime Text 3 plugin that helps writing imports.
 
 2. The import is then added to top of the file.
 ![Screenshot](http://i.imgur.com/D4vqajY.png)
+
+## How to install
+1. Open your terminal. At first you'll have to install `ack`.
+
+  - For Mac users:
+  ````$ brew install ack````
+  - For Debian/Ubuntu users:
+  ````$ sudo apt-get install ack````
+
+2. Clone the repository to the Sublime Text Packages folder.
+
+  ````
+$ cd ~/Library/Application\ Support/Sublime\ Text\ 3/Packages/
+$ git clone https://github.com/fastmonkeys/betterimportpackages BetterImportPackages
+  ````
